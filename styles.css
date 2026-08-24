@@ -31,7 +31,7 @@ img { display:block; width:100%; height:100%; object-fit: cover; }
 .plate.dragover { outline: 2px dashed var(--fg-dim); outline-offset: -8px; }
 
 /* NAV */
-.nav { position: fixed; top:0; left:0; right:0; z-index: 80; padding: 28px 40px; display: flex; justify-content: space-between; align-items: center; mix-blend-mode: difference; }
+.nav { position: fixed; top:0; left:0; right:0; z-index: 80; padding: 28px 40px; display: flex; justify-content: space-between; align-items: center; mix-blend-mode: difference; will-change: transform, opacity; }
 .nav-brand { font-size: 22px; color: var(--fg); }
 .nav-links { display: flex; gap: 32px; font-size: 13px; }
 
