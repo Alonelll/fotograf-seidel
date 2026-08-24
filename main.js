@@ -199,19 +199,15 @@
       if (distance > 0) gsap.to(track, { x: -distance, duration: 50, ease: 'none', repeat: -1 });
     }
 
-    // Nav — hide on scroll down, reveal on scroll up
+    // Nav — verschwindet sobald die Serien-Section (#work) erreicht wird
     const nav = document.querySelector('.nav');
-    if (nav) {
+    const workSection = document.querySelector('#work');
+    if (nav && workSection) {
       window.ScrollTrigger.create({
-        start: 0,
-        end: 'max',
-        onUpdate: (self) => {
-          if (self.scroll() < 80 || self.direction === -1) {
-            gsap.to(nav, { yPercent: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out', overwrite: true });
-          } else {
-            gsap.to(nav, { yPercent: -120, autoAlpha: 0, duration: 0.4, ease: 'power3.in', overwrite: true });
-          }
-        }
+        trigger: workSection,
+        start: 'top top',
+        onEnter: () => gsap.to(nav, { yPercent: -120, autoAlpha: 0, duration: 0.4, ease: 'power3.in', overwrite: true }),
+        onLeaveBack: () => gsap.to(nav, { yPercent: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out', overwrite: true }),
       });
     }
   }
