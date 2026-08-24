@@ -199,16 +199,19 @@
       if (distance > 0) gsap.to(track, { x: -distance, duration: 50, ease: 'none', repeat: -1 });
     }
 
-    // Nav — verschwindet sobald die Serien-Section (#work) erreicht wird
+    // Nav — zieht sich beim Scrollen zusammen, direkt und ohne Section-Trigger
     const nav = document.querySelector('.nav');
-    const workSection = document.querySelector('#work');
-    if (nav && workSection) {
-      window.ScrollTrigger.create({
-        trigger: workSection,
-        start: 'top top',
-        onEnter: () => gsap.to(nav, { yPercent: -120, autoAlpha: 0, duration: 0.4, ease: 'power3.in', overwrite: true }),
-        onLeaveBack: () => gsap.to(nav, { yPercent: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out', overwrite: true }),
-      });
+    if (nav) {
+      let compact = false;
+      const onScroll = () => {
+        const shouldCompact = window.scrollY > 20;
+        if (shouldCompact !== compact) {
+          compact = shouldCompact;
+          nav.classList.toggle('is-compact', compact);
+        }
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
     }
   }
   init();
