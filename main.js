@@ -185,7 +185,17 @@
         invalidateOnRefresh: true,
       });
 
-      window.addEventListener('resize', () => window.ScrollTrigger.refresh());
+      // iOS/iPad Safari feuert 'resize', wenn nur die Adressleiste ein-/ausblendet
+      // (innerHeight ändert sich, innerWidth nicht) — das darf kein Refresh auslösen,
+      // sonst verschiebt sich das Layout während des Scrollens/Anchor-Klicks.
+      let vw = window.innerWidth;
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        if (window.innerWidth === vw) return;
+        vw = window.innerWidth;
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => window.ScrollTrigger.refresh(), 150);
+      });
     }
 
     document.querySelectorAll('.s-row').forEach(row => {
